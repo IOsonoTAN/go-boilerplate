@@ -1,0 +1,1 @@
+# A Go boilerplate
