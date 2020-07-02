@@ -7,11 +7,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetConfigurationByKeyParams a struct that bind for uri
+type GetConfigurationByKeyParams struct {
+	Key string `uri:"key" binding:"required"`
+}
+
 // GetConfigurationByKeyHandler a controller of configuration that get value from database
 func GetConfigurationByKeyHandler(ctx *gin.Context) {
-	key := ctx.Param("key")
+	var params GetConfigurationByKeyParams
+	ctx.BindUri(&params) // same as ctx.Param("key")
 
-	result, err := MongoDB.GetConfigurationByKey(key)
+	result, err := MongoDB.GetConfigurationByKey(params.Key)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": gin.H{"message": "The key is not found"}})
 		return
@@ -21,9 +27,9 @@ func GetConfigurationByKeyHandler(ctx *gin.Context) {
 
 // NewConfiguration a struct for handle of request body as json
 type NewConfiguration struct {
-	Key   string `bson:"key"`
-	Value string `bson:"value"`
-	Type  string `bson:"type"`
+	Key   string `json:"key"`
+	Value string `json:"value"`
+	Type  string `json:"type"`
 }
 
 // PostNewConfigurationHandler a function to create a new configuration into database
