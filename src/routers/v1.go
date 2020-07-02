@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// RoutesVersionOne is a sub-router for version one
-func RoutesVersionOne(router *gin.Engine) *gin.Engine {
+// RoutesV1 is a sub-router for version one
+func RoutesV1(router *gin.Engine) *gin.Engine {
 	v1 := router.Group("/v1")
 	{
 		v1.GET("/config/:key", Handlers.GetConfigurationByKeyHandler)

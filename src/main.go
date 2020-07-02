@@ -9,6 +9,15 @@ import (
 	"github.com/joho/godotenv"
 )
 
+func setupRouter() *gin.Engine {
+	router := gin.Default()
+
+	Routers.Routes(router)
+	Routers.RoutesV1(router)
+
+	return router
+}
+
 func main() {
 	dotEnvError := godotenv.Load()
 	if dotEnvError != nil {
@@ -25,10 +34,7 @@ func main() {
 		appListenPort = "3000"
 	}
 
-	router := gin.Default()
-
-	Routers.Routes(router)
-	Routers.RoutesVersionOne(router)
+	router := setupRouter()
 
 	router.Run(":" + appListenPort)
 }

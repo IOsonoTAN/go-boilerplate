@@ -7,7 +7,7 @@ import (
 
 // Routes is a function for create a router in root path
 func Routes(router *gin.Engine) *gin.Engine {
-	router.GET("/", Handlers.HomeHandler)
+	router.GET("/ping", Handlers.PingHandler)
 
 	return router
 }
