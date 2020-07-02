@@ -10,6 +10,7 @@ func RoutesV1(router *gin.Engine) *gin.Engine {
 	v1 := router.Group("/v1")
 	{
 		v1.GET("/config/:key", Handlers.GetConfigurationByKeyHandler)
+		v1.POST("/config", Handlers.PostNewConfigurationHandler)
 	}
 	return router
 }

@@ -9,13 +9,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPingHandler(t *testing.T) {
-	endpoint := "/ping"
+func TestGetConfigurationByKeyHandler(t *testing.T) {
+	// key := "campaignStatus"
+	endpoint := "/v1/config/:key"
 	res := httptest.NewRecorder()
 	gin.SetMode(gin.TestMode)
 	ctx, req := gin.CreateTestContext(res)
+	ctx.Params = []gin.Param{gin.Param{Value: "v"}}
 
-	req.GET(endpoint, PingHandler)
+	req.GET(endpoint, GetConfigurationByKeyHandler)
 	ctx.Request, _ = http.NewRequest(http.MethodGet, endpoint, nil)
 	req.ServeHTTP(res, ctx.Request)
 
