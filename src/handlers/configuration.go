@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	MongoDB "github.com/IOsonoTAN/go-boilerplate/src/models/mongodb"
@@ -11,7 +10,6 @@ import (
 // GetConfigurationByKeyHandler a controller of configuration that get value from database
 func GetConfigurationByKeyHandler(ctx *gin.Context) {
 	key := ctx.Param("key")
-	fmt.Println(key)
 
 	result, err := MongoDB.GetConfigurationByKey(key)
 	if err != nil {
@@ -33,7 +31,11 @@ func PostNewConfigurationHandler(ctx *gin.Context) {
 	var newConfiguration NewConfiguration
 	ctx.BindJSON(&newConfiguration)
 
-	result, err := MongoDB.InsertNewConfiguration(newConfiguration.Key, newConfiguration.Value, newConfiguration.Type)
+	result, err := MongoDB.InsertNewConfiguration(
+		newConfiguration.Key,
+		newConfiguration.Value,
+		newConfiguration.Type,
+	)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": gin.H{"message": "Something went wrong, Please try again."}})
 		return

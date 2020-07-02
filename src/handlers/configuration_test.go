@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -9,18 +10,44 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetConfigurationByKeyHandler(t *testing.T) {
-	// key := "campaignStatus"
-	endpoint := "/v1/config/:key"
-	res := httptest.NewRecorder()
+type GetConfigurationByKeyParams struct {
+	Key string `uri:"key" binding:"required"`
+}
+
+func GenerateHandlerRouter() *gin.Engine {
 	gin.SetMode(gin.TestMode)
-	ctx, req := gin.CreateTestContext(res)
-	ctx.Params = []gin.Param{gin.Param{Value: "v"}}
+	router := gin.Default()
+	router.GET("/v1/config/:key", GetConfigurationByKeyHandler)
 
-	req.GET(endpoint, GetConfigurationByKeyHandler)
-	ctx.Request, _ = http.NewRequest(http.MethodGet, endpoint, nil)
-	req.ServeHTTP(res, ctx.Request)
+	return router
+}
 
-	assert.Equal(t, http.StatusOK, res.Code)
-	assert.Equal(t, "OK", res.Body.String())
+func TestSuccessGetConfigurationByKeyHandler(t *testing.T) {
+	router := GenerateHandlerRouter()
+	configKey := "amPointCostValue"
+
+	req, err := http.NewRequest(http.MethodGet, "/v1/config/"+configKey, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	resp := httptest.NewRecorder()
+	router.ServeHTTP(resp, req)
+
+	assert.Equal(t, resp.Code, 200)
+}
+
+func TestFailedGetConfigurationByKeyHandler(t *testing.T) {
+	router := GenerateHandlerRouter()
+	configKey := "testKey"
+
+	req, err := http.NewRequest(http.MethodGet, "/v1/config/"+configKey, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	resp := httptest.NewRecorder()
+	router.ServeHTTP(resp, req)
+
+	assert.Equal(t, resp.Code, 404)
 }
