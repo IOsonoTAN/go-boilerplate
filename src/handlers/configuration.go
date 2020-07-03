@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	MongoDB "github.com/IOsonoTAN/go-boilerplate/src/models/mongodb"
@@ -43,6 +44,7 @@ func PostNewConfigurationHandler(ctx *gin.Context) {
 		newConfiguration.Type,
 	)
 	if err != nil {
+		log.Fatalln(err)
 		ctx.JSON(http.StatusNotFound, gin.H{"error": gin.H{"message": "Something went wrong, Please try again."}})
 		return
 	}

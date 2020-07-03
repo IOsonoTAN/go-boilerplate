@@ -58,8 +58,13 @@ func InsertNewConfiguration(key, value, configType string) (result *Configuratio
 	if err != nil {
 		return nil, err
 	}
+
 	err = collection.FindOne(ctx, bson.M{
 		"_id": object.InsertedID,
 	}).Decode(&result)
+	if err != nil {
+		return nil, err
+	}
+
 	return result, nil
 }
