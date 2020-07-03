@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  # goapp:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: 'workshop-goapp'
+  #   ports:
+  #     - "5000:5000"
+  #   restart: unless-stopped
+  #   depends_on: 
+  #     - "mongodb"
+  #   links:
+  #     - "mongodb"
+  #   environment:
+  #     ENV: development
+  #     PORT: 5000
+  #     DB_MONGO_URI: mongodb://localhost:29017
+  #     DB_MONGO_DBNAME: workshop
+  #   networks:
+  #     - backend
+
+  mongodb:
+    image: 'mongo'
+    container_name: 'workshop-mongo'
+    volumes:
+      - ./mongo-volume:/data/db
+    ports:
+      - 29017:27017
+
+
+networks:
+  backend:
