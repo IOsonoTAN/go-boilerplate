@@ -2,8 +2,10 @@
 Hi there, here is a go boilerplate which is using [MongoDB](https://github.com/mongodb/mongo-go-driver) to be database, [Gin](https://github.com/gin-gonic/gin) to be an api framework and use a docker-compose to run as local with Docker.
 
 ## What are using in the project?
+- [Dot ENV](https://github.com/joho/godotenv)
 - [Go Module](https://blog.golang.org/using-go-modules)
 - [Go DotEnv](https://github.com/joho/godotenv)
+- [Gin Web Framework](https://github.com/gin-gonic/gin)
 - [Mongo Go Driver](https://github.com/mongodb/mongo-go-driver)
 
 ## Required
